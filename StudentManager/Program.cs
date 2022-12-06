@@ -18,8 +18,8 @@ builder.Services.AddNotyf(config =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ApplicationDbContext") ?? throw new InvalidOperationException("Connection string 'StudentContext' not found.")));
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(
+    builder.Configuration.GetConnectionString("SQLiteConnection")));
 
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
