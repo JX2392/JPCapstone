@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Course>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Teacher Homepage</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="nav-item">
+            <a class="btn btn-primary" asp-area="Teacher" asp-controller="Course" asp-action="Create">Create Courses</a>
+        </div>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StudentCount)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StudentCount)
+                </td>
+                <td>
+                    <a asp-controller="Course" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    @*<a asp-controller="Course" asp-action="Details" asp-route-id="@item.Id">Details</a> |*@
+                    <a asp-controller="Course" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
