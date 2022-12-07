@@ -12,5 +12,6 @@ namespace StudentManager.Data
 
         public DbSet<Course> Course { get; set; }
         public DbSet<Student> Student { get; set; }
+        public DbSet<LocalUser> Users { get; set; }
     }
 }
