@@ -10,8 +10,6 @@ namespace StudentManagerAPI.Repository
 
         IEnumerable<T> GetAll();
 
-        Task<IEnumerable<T>> GetAllAsync();
-
         void Add(T item);
 
         Task CreateAsync(T entity);

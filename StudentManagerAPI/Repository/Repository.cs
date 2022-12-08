@@ -48,11 +48,6 @@ namespace StudentManagerAPI.Repository
             dbSet.RemoveRange(items);
         }
 
-        public Task<IEnumerable<T>> GetAllAsync()
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task CreateAsync(T item)
         {
             await dbSet.AddAsync(item);

@@ -12,7 +12,7 @@ using StudentManagerAPI.Models;
 
 namespace StudentManagerAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class StudentAPIController : ControllerBase
     {
@@ -21,27 +21,63 @@ namespace StudentManagerAPI.Controllers
 
         // Gets All Students
         [HttpGet]
-        public async Task<IEnumerable<Student>> GetAll() => await _unitOfWork.Student.GetAllAsync();
+        public IEnumerable<Student> GetAll() => _unitOfWork.Student.GetAll();
 
         // Gets Student Details by ID
         [HttpGet("id")]
         [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetById(int id)
+        public IActionResult GetById(int id)
         {
             var studentFromDb = _unitOfWork.Student.GetFirstOrDefault(u => u.Id == id);
             return studentFromDb == null ? NotFound() : Ok(studentFromDb);
         }
 
         // Create Student
-        [HttpPost]
+        [HttpPost("Add")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<IActionResult> CreateStudent(Student student)
+        public async Task<IActionResult> AddStudent(Student student)
         {
             _unitOfWork.Student.Add(student);
             await _unitOfWork.Student.SaveAsync();
 
             return CreatedAtAction(nameof(Student), new {id = student.Id}, student);
+        }
+
+        // Edit Student Details
+        [HttpPut("Edit/{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Update(int id, Student student)
+        {
+            if (id != student.Id) return BadRequest();
+
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Student.Update(student);
+                await _unitOfWork.Student.SaveAsync();
+                return NoContent();
+            }
+            return BadRequest();
+        }
+
+        [HttpDelete("Delete/{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (id == 0 || id == null)
+            {
+                return NotFound();
+            }
+
+            var student = _unitOfWork.Student.GetFirstOrDefault(u => u.Id == id);
+            if (student == null)
+            {
+                return NotFound();
+            }
+            _unitOfWork.Student.Remove(student);
+            await _unitOfWork.Student.SaveAsync();
+
+            return NoContent();
         }
     }
 }
