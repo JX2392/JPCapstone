@@ -18,9 +18,18 @@ builder.Services.AddNotyf(config =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(
-    builder.Configuration.GetConnectionString("SQLiteConnection")));
 
+//db context
+var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
+var dbName = Environment.GetEnvironmentVariable("DB_NAME");
+var dbPassword = Environment.GetEnvironmentVariable("DB_SA_PASSWORD") ;
+var connectionSrting = "Server=tcp:jx2392-jump.database.windows.net,1433;Initial Catalog=StudentManager;Persist Security Info=False;User ID=JUMPPro;Password=!qazse4rfv;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;\r\n";
+builder.Services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(connectionSrting));
+//builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("ApplicationDbContext") ?? throw new InvalidOperationException("Connection string 'StudentContext' not found.")));
+
+
+Console.WriteLine(connectionSrting+"connection string");
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
