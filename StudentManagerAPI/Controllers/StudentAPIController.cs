@@ -1,6 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
+using System.Net;
+using System.Text.Json;
+using StudentManagerAPI.Repository.IRepository;
+using Refit;
+using StudentManagerAPI.Models;
 
 namespace StudentManagerAPI.Controllers
 {
@@ -8,36 +16,32 @@ namespace StudentManagerAPI.Controllers
     [ApiController]
     public class StudentAPIController : ControllerBase
     {
-        // GET: api/<StudentAPIController>
+        private readonly IUnitOfWork _unitOfWork;
+        public StudentAPIController(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
+
+        // Gets All Students
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IEnumerable<Student>> GetAll() => await _unitOfWork.Student.GetAllAsync();
+
+        // Gets Student Details by ID
+        [HttpGet("id")]
+        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetById(int id)
         {
-            return new string[] { "value1", "value2" };
+            var studentFromDb = _unitOfWork.Student.GetFirstOrDefault(u => u.Id == id);
+            return studentFromDb == null ? NotFound() : Ok(studentFromDb);
         }
 
-        // GET api/<StudentAPIController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<StudentAPIController>
+        // Create Student
         [HttpPost]
-        public void Post([FromBody] string value)
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<IActionResult> CreateStudent(Student student)
         {
-        }
+            _unitOfWork.Student.Add(student);
+            await _unitOfWork.Student.SaveAsync();
 
-        // PUT api/<StudentAPIController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<StudentAPIController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return CreatedAtAction(nameof(Student), new {id = student.Id}, student);
         }
     }
 }
