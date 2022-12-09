@@ -27,6 +27,7 @@ namespace StudentManager.Controllers
             _toastNotification = toastNotification;
         }
         // GET: Student
+
         public IActionResult Index()
         {
             IEnumerable<Student> studentStudentList = _unitOfWork.Student.GetAll();

@@ -1,0 +1,32 @@
+version: '3.4'
+
+networks:
+  student-manager-network:
+
+services:
+  studentmanagerdb:
+    container_name: student-manager-db
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - 1433:1433
+    environment:
+      - ACCEPT_EULA=Y    
+      - MSSQL_SA_PASSWORD=Student@123
+    networks:
+      - student-manager-network
+  studentmanager:
+    container_name: student-manager-demo
+    image: ${DOCKER_REGISTRY-}studentmanager
+    build:
+      context: .
+      dockerfile: StudentManager/Dockerfile
+    ports:
+      - 8001:80
+    depends_on:
+      - studentmanagerdb
+    environment:
+      - DB_HOST=studentmanagerdb
+      - DB_NAME=Student
+      - DB_SA_PASSWORD=Student@123
+    networks:
+      - student-manager-network

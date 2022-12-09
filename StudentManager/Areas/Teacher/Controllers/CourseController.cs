@@ -2,6 +2,8 @@
 using StudentManager.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace StudentManager.Areas.Teacher.Controllers
 {
@@ -16,7 +18,7 @@ namespace StudentManager.Areas.Teacher.Controllers
             _unitOfWork = unitOfWork;
             _toastNotification = toastNotification;
         }
-
+        [Authorize(Roles = "admin")]
         public IActionResult Index()
         {
             IEnumerable<Course> objCourseList = _unitOfWork.Course.GetAll();
