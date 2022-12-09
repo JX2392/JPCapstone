@@ -8,12 +8,12 @@ namespace StudentManager.Services
     public class AuthService : BaseService, IAuthService
     {
         private readonly IHttpClientFactory _clientFactory;
-        private string villaUrl;
+        private string studentUrl;
 
         public AuthService(IHttpClientFactory clientFactory, IConfiguration configuration) : base(clientFactory)
         {
             _clientFactory = clientFactory;
-            villaUrl = configuration.GetValue<string>("ServiceUrls:VillaAPI");
+            studentUrl = configuration.GetValue<string>("ServiceUrls:StudentManagerAPI");
 
         }
 
@@ -23,7 +23,7 @@ namespace StudentManager.Services
             {
                 ApiType = SD.ApiType.POST,
                 Data = loginRequestDTO,
-                Url = villaUrl + "/api/v1/User/login",
+                Url = studentUrl + "/api/User/login",
             });
         }
 
@@ -33,7 +33,7 @@ namespace StudentManager.Services
             {
                 ApiType = SD.ApiType.POST,
                 Data = registerationRequestDTO,
-                Url = villaUrl + "/api/v1/User/register",
+                Url = studentUrl + "/api/User/register",
             });
         }
     }

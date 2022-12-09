@@ -7,6 +7,6 @@ namespace StudentManagerAPI.Data
     {
         public ApplicationDbContext(DbContextOptions options) : base(options)
         { }
-            public DbSet<LocalUser> LocalUsers { get; set; } 
+        public DbSet<LocalUser> Users { get; set; }
     }
 }

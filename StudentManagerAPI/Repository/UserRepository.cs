@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using StudentManagerAPI.Data;
 using StudentManagerAPI.Models;
 using StudentManagerAPI.Models.DTO;
@@ -12,30 +11,34 @@ namespace StudentManagerAPI.Repository
 {
     public class UserRepository : IUserRepository
     {
+
         private readonly ApplicationDbContext _db;
         private readonly string secretKey;
 
         public UserRepository(ApplicationDbContext db, IConfiguration configuration)
         {
             _db = db;
-            secretKey = configuration.GetValue<string>("ApiSettings:Secret");
+
+            secretKey = configuration.GetValue<string>("ApiSettings:secret");
         }
 
         public bool IsUniqueUser(string username)
         {
-            var user = _db.LocalUsers.FirstOrDefault(x => x.UserName == username);
+            var user = _db.Users.FirstOrDefault(x => x.UserName == username);
+
             if (user == null)
             {
                 return true;
             }
+
             return false;
         }
 
-
         public async Task<LoginResponseDTO> Login(LoginRequestDTO loginRequestDTO)
         {
-            var user = await _db.LocalUsers.FirstOrDefaultAsync(u => u.UserName == loginRequestDTO.UserName
-                        && u.Password == loginRequestDTO.Password);
+            var user = _db.Users
+                .FirstOrDefault(u => u.UserName.ToLower() == loginRequestDTO.UserName.ToLower());
+
 
             if (user == null)
             {
@@ -69,24 +72,25 @@ namespace StudentManagerAPI.Repository
             return loginResponseDTO;
 
         }
-        public async Task<LocalUser> Register(RegisterationRequestDTO registerationRequestDTO)
+
+        public async Task<LocalUser> Register(RegisterationRequestDTO registrationRequestDTO)
         {
             LocalUser localUser = new()
             {
-                UserName = registerationRequestDTO.UserName,
-                Password = registerationRequestDTO.Password,
-                Name = registerationRequestDTO.Name,
-                Role = registerationRequestDTO.Role,
+                UserName = registrationRequestDTO.UserName,
+                Password = registrationRequestDTO.Password,
+                Name = registrationRequestDTO.Name,
+                Role = registrationRequestDTO.Role == null ? "admin" : registrationRequestDTO.Role,
             };
 
-            _db.LocalUsers.Add(localUser);
+            _db.Users.Add(localUser);
 
             await _db.SaveChangesAsync();
 
             localUser.Password = "";
 
             return localUser;
-
         }
     }
 }
+

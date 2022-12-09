@@ -13,6 +13,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpClient<IAuthService, AuthService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
+builder.Services.AddDistributedMemoryCache();
+
+
 // Add ToastNotification
 builder.Services.AddNotyf(config =>
 {
@@ -35,7 +38,7 @@ var connectionSrting = "Server=tcp:jx2392-jump.database.windows.net,1433;Initial
 builder.Services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(connectionSrting));
 //builder.Services.AddDbContext<ApplicationDbContext>(options =>
 //    options.UseSqlServer(builder.Configuration.GetConnectionString("ApplicationDbContext") ?? throw new InvalidOperationException("Connection string 'StudentContext' not found.")));
-
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

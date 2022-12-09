@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StudentManager.Controllers;
 using StudentManager.Models;
 using StudentManager.Repository.IRepository;
+using System.Data;
 
 namespace StudentManager.Areas.Teacher.Controllers
 {
@@ -14,7 +16,7 @@ namespace StudentManager.Areas.Teacher.Controllers
         {
             _unitOfWork = unitOfWork;
         }
-
+        [Authorize(Roles = "admin")]
         public IActionResult Index()
         {
             IEnumerable<Course> objCourseList = _unitOfWork.Course.GetAll();
