@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: jxjpcapstone 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jxjpcapstone
+  template:
+    metadata:
+      labels:
+        app: jxjpcapstone 
+    spec:
+      containers:
+        - name: jxjpcapstone 
+          image: jx2392jpcontainers.azurecr.io/jxjpcapstone
+          ports:
+          - containerPort: 80
