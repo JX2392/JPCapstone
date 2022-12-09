@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  studentmanager:
+    build:
+      context: ./
+      dockerfile: StudentManager/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: staging
+    networks:
+      - studentnetwork
+  studentmanagerapi:
+    build:
+      context: ./
+      dockerfile: StudentManagerAPI/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: staging
+    networks:
+      - studentnetwork
+networks:
+  studentnetwork:
+  

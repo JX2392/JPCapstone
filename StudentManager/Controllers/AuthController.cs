@@ -77,8 +77,6 @@ namespace StudentManager.Controllers
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
-            // return View();
-
             await HttpContext.SignOutAsync();
             HttpContext.Session.SetString(SD.SessionToken, "");
             return RedirectToAction("Index", "Home");

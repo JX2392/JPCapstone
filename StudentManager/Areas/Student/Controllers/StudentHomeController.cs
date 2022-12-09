@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StudentManager.Controllers;
+using System.Data;
 
 namespace StudentManager.Areas.Student.Controllers
 {
@@ -12,7 +14,7 @@ namespace StudentManager.Areas.Student.Controllers
         {
             _logger = logger;
         }
-
+        [Authorize(Roles = "admin")]
         public IActionResult Index()
         {
             return View();

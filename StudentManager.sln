@@ -5,9 +5,9 @@ VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentManager", "StudentManager\StudentManager.csproj", "{A0553D92-74EB-4E57-88D6-5795735DFFA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentManagerAPI", "StudentManagerAPI\StudentManagerAPI.csproj", "{AE22E5CA-4357-4559-8B8C-D40E535EAA27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentManagerAPI", "StudentManagerAPI\StudentManagerAPI.csproj", "{AE22E5CA-4357-4559-8B8C-D40E535EAA27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "Utility\Utility.csproj", "{0C9DB9D4-C810-484C-84AD-696ED6BB3C4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utility", "Utility\Utility.csproj", "{0C9DB9D4-C810-484C-84AD-696ED6BB3C4D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
