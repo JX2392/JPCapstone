@@ -1,13 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore;
-using System.Net;
-using System.Text.Json;
+﻿using Microsoft.AspNetCore.Mvc;
 using StudentManagerAPI.Repository.IRepository;
-using Refit;
 using StudentManagerAPI.Models;
 
 namespace StudentManagerAPI.Controllers
@@ -41,7 +33,7 @@ namespace StudentManagerAPI.Controllers
             _unitOfWork.Student.Add(student);
             await _unitOfWork.Student.SaveAsync();
 
-            return CreatedAtAction(nameof(Student), new {id = student.Id}, student);
+            return Ok(CreatedAtAction(nameof(Student), new {id = student.Id}, student));
         }
 
         // Edit Student Details
