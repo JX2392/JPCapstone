@@ -1,8 +1,10 @@
-﻿namespace StudentManager.Models.DTO
+﻿using StudentManager.Models.Dto;
+
+namespace StudentManager.Models.Dto
 {
     public class LoginResponseDTO
-    {
-        public LocalUser User { get; set; }
-        public string Token { get; set; }
-    }
+	{
+		public UserDTO User { get; set; }
+		public string Token { get; set; }
+	}
 }

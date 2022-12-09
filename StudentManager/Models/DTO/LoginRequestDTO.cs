@@ -1,4 +1,4 @@
-﻿namespace StudentManager.Models.DTO
+﻿namespace StudentManager.Models.Dto
 {
     public class LoginRequestDTO
     {
