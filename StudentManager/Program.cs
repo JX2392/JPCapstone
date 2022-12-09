@@ -18,6 +18,7 @@ builder.Services.AddNotyf(config =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+
 //db context
 var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
 var dbName = Environment.GetEnvironmentVariable("DB_NAME");
@@ -26,6 +27,7 @@ var connectionString = "Server=tcp:jx2392-jump.database.windows.net,1433;Initial
 builder.Services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(connectionString));
 //builder.Services.AddDbContext<ApplicationDbContext>(options =>
 //    options.UseSqlServer(builder.Configuration.GetConnectionString("ApplicationDbContext") ?? throw new InvalidOperationException("Connection string 'StudentContext' not found.")));
+
 
 Console.WriteLine(connectionString+"connection string");
 
