@@ -1,4 +1,4 @@
-﻿using StudentManager.Data;
+﻿using StudentManagerAPI.Data;
 using StudentManagerAPI.Models;
 using StudentManagerAPI.Repository.IRepository;
 

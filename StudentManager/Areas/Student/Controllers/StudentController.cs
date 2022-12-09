@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Threading.Tasks;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -27,7 +29,7 @@ namespace StudentManager.Controllers
             _toastNotification = toastNotification;
         }
         // GET: Student
-
+        [Authorize(Roles = "admin")]
         public IActionResult Index()
         {
             IEnumerable<Student> studentStudentList = _unitOfWork.Student.GetAll();

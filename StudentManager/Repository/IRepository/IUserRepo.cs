@@ -1,6 +1,5 @@
 ﻿using StudentManager.Models;
-using StudentManager.Models.DTO;
-
+using StudentManager.Models.Dto;
 namespace StudentManager.Repository.IRepository
 {
     public interface IUserRepo

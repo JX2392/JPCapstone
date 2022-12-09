@@ -1,5 +1,5 @@
 ﻿using StudentManagerAPI.Repository.IRepository;
-using StudentManager.Data;
+using StudentManagerAPI.Data;
 
 namespace StudentManagerAPI.Repository
 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using StudentManager.Data;
+using StudentManagerAPI.Data;
 
 namespace StudentManagerAPI.Repository
 {
